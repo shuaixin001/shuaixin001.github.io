@@ -1,13 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliasChang</title>
-</head>
-<body>
-    <h1>你好</h1>
-</body>
-</html>
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>表单示例</title>  
+    <script src="https://cdn.staticfile.org/blueimp-md5/2.12.0/js/md5.min.js"></script>  
+</head>  
+<body>  
+<h2>解绑</h2>  
+<form id="myForm">  
+    <label for="inputBox">卡密:</label>  
+    <input type="text" id="inputBox" name="inputBox">  
+    <select id="select1" name="select1">  
+        <option value="龙吟">龙吟</option>  
+        <option value="班花">班花</option>  
+        <option value="虎啸">虎啸</option>  
+    </select>  
+    <button type="button" onclick="printSelections()">确认</button>  
+</form>  
+<script>  
 
+ function scsjzf() {  
+    let result = '';  
+     characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';  
+     charactersLength = characters.length;  
+    for (let i = 0; i < 36; i++) {  
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));  
+    }  
+    return result;  
+}  
+
+
+function printSelections() {  
+    var inputValue = document.getElementById('inputBox').value;  
+    var select1Value = document.getElementById('select1').value;  
+   
+     timestamp = Math.round(Date.now() / 1000);
+    
+     nonce = scsjzf();
+    if (select1Value=="龙吟"){
+         app_key = 'cpnuq2bdqusr4otn2ehg'; 
+         app_secret = "gaFdWtYbs2Z6KiJIScz86KCW2jKReDOB" 
+         password = 'dza5i8';  
+    }else if(select1Value=="虎啸"){
+         app_key = 'coa4c1jdqusvgvn3ubh0'; 
+         app_secret = "LneKfEc2jCMR5mDAjpY4kntSBAY65v6N" 
+         password = 'hdt5cd';  
+    }else{
+         app_key = 'cim39ebdqusrfil0ffc0'; 
+         app_secret = "ZSFEA0Rp2J8lHTmbbqTLh9AYkW3ShOiE" 
+         password = 't3x4tt';  
+    }
+    console.log('输入框内容:', app_key);  
+    console.log('输入框内容:', app_secret);  
+    console.log('输入框内容:', password);  
+     card = inputValue;
+    // 使用md5函数进行加密  
+    
+     http_method = "POST"
+     host = "api.paojiaoyun.com"
+     path = "/v1/card/unbind_device/by_password"
+     params = "app_key="+app_key+"&card="+card+"&nonce="+nonce+"&password="+password+"&timestamp="+timestamp
+     sign = md5(http_method + host + path + params + app_secret)
+    // 构造POST请求体（这里使用JSON格式）  
+     postData = JSON.stringify({  
+        app_key: app_key,  
+        card: card,  
+        nonce: nonce,  
+        password: password,  
+        timestamp: timestamp, // 确保是整数  
+        sign:sign
+    });  
+    // 发送POST请求  
+    fetch('http://api.paojiaoyun.com'+path, {  
+        method: 'POST', // 或者 'POST'  
+        headers: {  
+            'Content-Type': 'application/json',  
+        },  
+        body: postData  
+    })  
+    .then(response => {  
+        if (!response.ok) {  
+            throw new Error('Network response was not ok');  
+        }  
+        return response.json();  
+    })  
+    .then(data => {  
+        console.log('Success:', data);  
+        var jsonString = JSON.stringify(data, null, 2); 
+        alert('Success:\n' + jsonString); 
+    })  
+    .catch(error => {  
+        console.error('There has been a problem with your fetch operation:', error);  
+    });    
+}  
+</script>  
+</body>  
+</html>
