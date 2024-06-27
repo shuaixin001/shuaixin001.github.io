@@ -34,9 +34,7 @@
 function printSelections() {  
     var inputValue = document.getElementById('inputBox').value;  
     var select1Value = document.getElementById('select1').value;  
-   
      timestamp = Math.round(Date.now() / 1000);
-    
      nonce = scsjzf();
     if (select1Value=="龙吟"){
          app_key = 'cpnuq2bdqusr4otn2ehg'; 
@@ -51,14 +49,11 @@ function printSelections() {
          app_secret = "ZSFEA0Rp2J8lHTmbbqTLh9AYkW3ShOiE" 
          password = 't3x4tt';  
     }
-    console.log('输入框内容:', app_key);  
-    console.log('输入框内容:', app_secret);  
-    console.log('输入框内容:', password);  
-     card = inputValue;
+    card = inputValue;
     // 使用md5函数进行加密  
     
      http_method = "POST"
-     host = "api.paojiaoyun.com"
+     host = "api.pjy.pub"
      path = "/v1/card/unbind_device/by_password"
      params = "app_key="+app_key+"&card="+card+"&nonce="+nonce+"&password="+password+"&timestamp="+timestamp
      sign = md5(http_method + host + path + params + app_secret)
@@ -71,8 +66,9 @@ function printSelections() {
         timestamp: timestamp, // 确保是整数  
         sign:sign
     });  
+    
     // 发送POST请求  
-    fetch('http://api.paojiaoyun.com'+path, {  
+    fetch('https://api.pjy.pub'+path, {  
         method: 'POST', // 或者 'POST'  
         headers: {  
             'Content-Type': 'application/json',  
