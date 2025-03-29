@@ -1,7 +1,7 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
+<!DOCTYPE html>
+<!-- saved from url=(0030)https://shuaixin001.github.io/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+      
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>ai工作室</title>  
     <script>
@@ -53,9 +53,9 @@ function printSelections() {
     }
     card = inputValue;
     // 使用md5函数进行加密  
-    
+    //http://api.paojiaoyun.com/v1/card/unbind_device/by_password
      http_method = "POST"
-     host = "api.pjy.pub"
+     host = "api.paojiaoyun.com"
      path = "/v1/card/unbind_device/by_password"
      params = "app_key="+app_key+"&card="+card+"&nonce="+nonce+"&password="+password+"&timestamp="+timestamp
      sign = md5(http_method + host + path + params + app_secret)
@@ -70,7 +70,7 @@ function printSelections() {
     });  
     
     // 发送POST请求  
-    fetch('https://api.pjy.pub'+path, {  
+    fetch('http://api.paojiaoyun.com'+path, {  
         method: 'POST', // 或者 'POST'  
         headers: {  
             'Content-Type': 'application/json',  
@@ -93,5 +93,6 @@ function printSelections() {
     });    
 }  
 </script>  
-</body>  
-</html>
+  
+
+</body></html>
